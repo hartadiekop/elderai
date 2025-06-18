@@ -264,40 +264,34 @@
   </nav>
 </div>
 <script>
-// Popup Health Section logic
-const healthSection = document.getElementById('healthSection');
-const closeHealthSectionBtn = document.getElementById('closeHealthSection');
-const closeHealthSectionIcon = closeHealthSectionBtn ? closeHealthSectionBtn.querySelector('.material-icons') : null;
-const navHealth = Array.from(document.querySelectorAll('nav .material-icons')).find(el => el.textContent.trim() === 'favorite_border');
+document.addEventListener('DOMContentLoaded', function() {
+  const healthSection = document.getElementById('healthSection');
+  const closeHealthSectionBtn = document.getElementById('closeHealthSection');
+  const navHealth = Array.from(document.querySelectorAll('nav .material-icons')).find(el => el.textContent.trim() === 'favorite_border');
 
-function openHealthSection() {
-  healthSection.classList.remove('translate-x-full');
-  healthSection.classList.add('translate-x-0');
-}
-function closeHealthSectionFn() {
-  healthSection.classList.remove('translate-x-0');
-  healthSection.classList.add('translate-x-full');
-}
-if (navHealth) {
-  navHealth.parentElement.addEventListener('click', function(e) {
-    e.preventDefault();
-    openHealthSection();
+  function openHealthSection() {
+    healthSection.classList.remove('translate-x-full');
+    healthSection.classList.add('translate-x-0');
+  }
+  function closeHealthSectionFn() {
+    healthSection.classList.remove('translate-x-0');
+    healthSection.classList.add('translate-x-full');
+  }
+  if (navHealth) {
+    navHealth.parentElement.addEventListener('click', function(e) {
+      e.preventDefault();
+      openHealthSection();
+    });
+  }
+  if (closeHealthSectionBtn) {
+    closeHealthSectionBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      closeHealthSectionFn();
+    });
+  }
+  window.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeHealthSectionFn();
   });
-}
-if (closeHealthSectionBtn) {
-  closeHealthSectionBtn.addEventListener('click', function(e) {
-    e.preventDefault();
-    closeHealthSectionFn();
-  });
-}
-if (closeHealthSectionIcon) {
-  closeHealthSectionIcon.addEventListener('click', function(e) {
-    e.preventDefault();
-    closeHealthSectionFn();
-  });
-}
-window.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') closeHealthSectionFn();
 });
 </script>
 </body></html>
