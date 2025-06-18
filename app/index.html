@@ -164,7 +164,7 @@
     <section id="healthSection" class="fixed inset-0 z-30 bg-[var(--background-color)] transition-transform duration-300 transform translate-x-full overflow-y-auto" style="max-width:100vw;">
       <div id="closeHealthSection" class="flex items-center p-4 sticky top-0 bg-[var(--background-color)] z-40 shadow-sm">
         <button class="text-white flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-[#2c2c2c] transition-colors">
-          <span class="material-icons">close</span>
+          <span class="material-icons">arrow_back_ios_new</span>
         </button>
         <h1 class="text-white text-xl font-semibold leading-tight flex-1 text-center -ml-10">Health</h1>
       </div>
@@ -318,6 +318,48 @@
         </section>
       </main>
     </section>
+    <section id="panicSection" class="fixed inset-0 z-30 bg-[var(--background-color)] text-[var(--text-color)] transition-transform duration-300 transform translate-x-full overflow-y-auto flex flex-col" style="max-width:100vw; font-family: Lexend, 'Noto Sans', sans-serif;">
+      <div class="flex items-center p-4 sticky top-0 bg-[var(--background-color)] z-40 justify-between shadow-sm">
+        <button id="closePanicSection" class="text-[var(--text-color)] hover:text-white transition-colors">
+          <span class="material-icons text-3xl">arrow_back_ios_new</span>
+        </button>
+        <h1 class="text-[var(--text-color)] text-xl font-semibold flex-1 text-center pr-8">Panic</h1>
+      </div>
+      <main class="flex-grow flex flex-col items-center justify-center px-4 py-8 text-center">
+        <button class="flex items-center justify-center rounded-full h-48 w-48 bg-red-500 text-white text-3xl font-bold shadow-2xl transform transition-all duration-150 ease-in-out hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-red-300 focus:ring-opacity-50 mb-8 animate-pulse">
+          PANIC
+        </button>
+        <p class="text-[var(--text-muted-color)] text-base font-normal leading-relaxed max-w-md mb-12">
+          If you are in danger, press the button above. We will contact emergency services and your emergency contacts immediately.
+        </p>
+        <section class="w-full max-w-md">
+          <h2 class="text-[var(--text-color)] text-lg font-semibold leading-tight mb-4 text-left">Other Assistance</h2>
+          <div class="space-y-3">
+            <a class="flex items-center gap-4 bg-[var(--card-background-color)] p-4 rounded-xl hover:bg-opacity-80 transition-colors group" href="#">
+              <div class="text-[var(--text-muted-color)] flex items-center justify-center rounded-lg bg-black/20 shrink-0 size-12 group-hover:bg-black/30 transition-colors">
+                <span class="material-icons text-2xl text-[var(--text-color)]">local_police</span>
+              </div>
+              <p class="text-[var(--text-color)] text-base font-medium flex-1 truncate">Call Emergency Services</p>
+              <span class="material-icons text-xl text-[var(--text-muted-color)]">chevron_right</span>
+            </a>
+            <a class="flex items-center gap-4 bg-[var(--card-background-color)] p-4 rounded-xl hover:bg-opacity-80 transition-colors group" href="#">
+              <div class="text-[var(--text-muted-color)] flex items-center justify-center rounded-lg bg-black/20 shrink-0 size-12 group-hover:bg-black/30 transition-colors">
+                <span class="material-icons text-2xl text-[var(--text-color)]">contacts</span>
+              </div>
+              <p class="text-[var(--text-color)] text-base font-medium flex-1 truncate">Call Emergency Contact</p>
+              <span class="material-icons text-xl text-[var(--text-muted-color)]">chevron_right</span>
+            </a>
+            <a class="flex items-center gap-4 bg-[var(--card-background-color)] p-4 rounded-xl hover:bg-opacity-80 transition-colors group" href="#">
+              <div class="text-[var(--text-muted-color)] flex items-center justify-center rounded-lg bg-black/20 shrink-0 size-12 group-hover:bg-black/30 transition-colors">
+                <span class="material-icons text-2xl text-[var(--text-color)]">support_agent</span>
+              </div>
+              <p class="text-[var(--text-color)] text-base font-medium flex-1 truncate">Call Support Line</p>
+              <span class="material-icons text-xl text-[var(--text-muted-color)]">chevron_right</span>
+            </a>
+          </div>
+        </section>
+      </main>
+    </section>
   </div>
   <nav class="fixed bottom-0 left-0 right-0 border-t border-[var(--icon-background-color)] bg-[var(--card-background-color)] shadow-top z-20">
     <div class="flex justify-around items-center h-16 px-1 sm:px-2">
@@ -431,10 +473,53 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
+  // Panic Section
+  const panicSection = document.getElementById('panicSection');
+  const closePanicSectionBtn = document.getElementById('closePanicSection');
+  const navPanic = Array.from(document.querySelectorAll('nav .material-icons')).find(el => el.textContent.trim() === 'sos');
+
+  function openPanicSection() {
+    panicSection.classList.remove('translate-x-full');
+    panicSection.classList.add('translate-x-0');
+    panicSection.style.visibility = 'visible';
+    panicSection.style.pointerEvents = 'auto';
+  }
+  function closePanicSectionFn() {
+    panicSection.classList.remove('translate-x-0');
+    panicSection.classList.add('translate-x-full');
+    panicSection.style.pointerEvents = 'none';
+    setTimeout(() => {
+      panicSection.style.visibility = 'hidden';
+    }, 300);
+  }
+  panicSection.style.visibility = 'hidden';
+  panicSection.style.pointerEvents = 'none';
+
+  if (navPanic) {
+    navPanic.parentElement.addEventListener('click', function(e) {
+      e.preventDefault();
+      openPanicSection();
+    });
+  }
+  if (closePanicSectionBtn) {
+    closePanicSectionBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      closePanicSectionFn();
+    });
+    const icon = closePanicSectionBtn.querySelector('.material-icons');
+    if (icon) {
+      icon.addEventListener('click', function(e) {
+        e.stopPropagation();
+        closePanicSectionFn();
+      });
+    }
+  }
+
   window.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
       closeHealthSectionFn();
       closeMoodSectionFn();
+      closePanicSectionFn();
     }
   });
 });
