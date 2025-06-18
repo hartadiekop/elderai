@@ -152,8 +152,8 @@
       </div>
     </section>
     <section id="healthSection" class="fixed inset-0 z-30 bg-[var(--background-color)] transition-transform duration-300 transform translate-x-full overflow-y-auto" style="max-width:100vw;">
-      <div class="flex items-center p-4 sticky top-0 bg-[var(--background-color)] z-40 shadow-sm">
-        <button id="closeHealthSection" class="text-white flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-[#2c2c2c] transition-colors">
+      <div id="closeHealthSection" class="flex items-center p-4 sticky top-0 bg-[var(--background-color)] z-40 shadow-sm">
+        <button class="text-white flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-[#2c2c2c] transition-colors">
           <span class="material-icons">close</span>
         </button>
         <h1 class="text-white text-xl font-semibold leading-tight flex-1 text-center -ml-10">Health</h1>
@@ -272,11 +272,21 @@ document.addEventListener('DOMContentLoaded', function() {
   function openHealthSection() {
     healthSection.classList.remove('translate-x-full');
     healthSection.classList.add('translate-x-0');
+    healthSection.style.visibility = 'visible';
+    healthSection.style.pointerEvents = 'auto';
   }
   function closeHealthSectionFn() {
     healthSection.classList.remove('translate-x-0');
     healthSection.classList.add('translate-x-full');
+    healthSection.style.pointerEvents = 'none';
+    setTimeout(() => {
+      healthSection.style.visibility = 'hidden';
+    }, 300); // tunggu animasi selesai
   }
+  // Sembunyikan popup di awal
+  healthSection.style.visibility = 'hidden';
+  healthSection.style.pointerEvents = 'none';
+
   if (navHealth) {
     navHealth.parentElement.addEventListener('click', function(e) {
       e.preventDefault();
@@ -288,6 +298,13 @@ document.addEventListener('DOMContentLoaded', function() {
       e.preventDefault();
       closeHealthSectionFn();
     });
+    const icon = closeHealthSectionBtn.querySelector('.material-icons');
+    if (icon) {
+      icon.addEventListener('click', function(e) {
+        e.stopPropagation();
+        closeHealthSectionFn();
+      });
+    }
   }
   window.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') closeHealthSectionFn();
