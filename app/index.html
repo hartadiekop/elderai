@@ -266,20 +266,17 @@
 <script>
 // Popup Health Section logic
 const healthSection = document.getElementById('healthSection');
-const closeHealthSection = document.getElementById('closeHealthSection');
+const closeHealthSectionBtn = document.getElementById('closeHealthSection');
+const closeHealthSectionIcon = closeHealthSectionBtn ? closeHealthSectionBtn.querySelector('.material-icons') : null;
 const navHealth = Array.from(document.querySelectorAll('nav .material-icons')).find(el => el.textContent.trim() === 'favorite_border');
 
 function openHealthSection() {
-  healthSection.classList.remove('translate-x-full', 'slide-out-right');
-  healthSection.classList.add('translate-x-0', 'slide-in-left');
+  healthSection.classList.remove('translate-x-full');
+  healthSection.classList.add('translate-x-0');
 }
 function closeHealthSectionFn() {
-  healthSection.classList.remove('translate-x-0', 'slide-in-left');
-  healthSection.classList.add('slide-out-right');
-  setTimeout(() => {
-    healthSection.classList.remove('slide-out-right');
-    healthSection.classList.add('translate-x-full');
-  }, 300); // durasi animasi harus sama dengan transition
+  healthSection.classList.remove('translate-x-0');
+  healthSection.classList.add('translate-x-full');
 }
 if (navHealth) {
   navHealth.parentElement.addEventListener('click', function(e) {
@@ -287,8 +284,15 @@ if (navHealth) {
     openHealthSection();
   });
 }
-if (closeHealthSection) {
-  closeHealthSection.addEventListener('click', function() {
+if (closeHealthSectionBtn) {
+  closeHealthSectionBtn.addEventListener('click', function(e) {
+    e.preventDefault();
+    closeHealthSectionFn();
+  });
+}
+if (closeHealthSectionIcon) {
+  closeHealthSectionIcon.addEventListener('click', function(e) {
+    e.preventDefault();
     closeHealthSectionFn();
   });
 }
@@ -296,16 +300,4 @@ window.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeHealthSectionFn();
 });
 </script>
-<style>
-@layer utilities {
-  .slide-in-left {
-    --tw-translate-x: 0%;
-  }
-  .slide-out-right {
-    --tw-translate-x: 100%;
-    transition-property: transform;
-    transition-duration: 300ms;
-  }
-}
-</style>
 </body></html>
